@@ -1,43 +1,35 @@
 package com.example.unimate;
 
-// ID එක අල්ලගන්න අවශ්‍ය අලුත් කේතය
 import com.google.firebase.firestore.DocumentId;
 
 public class TaskModel {
-
-    // 1. Firebase එකෙන් දෙන ID එක සේව් කරගන්න තැන (මේක ගොඩක් වැදගත්!)
     @DocumentId
-    String taskId;
+    public String taskId;
+    public String title, description, category, priority, dateText, timeText;
+    public boolean isCompleted;
+    public int priorityLevel;
 
-    String title;
-    String description;
-    boolean isCompleted;
+    public TaskModel() {} // Firebase සඳහා
 
-    // හිස් අච්චුව
-    public TaskModel() {
-    }
-
-    // සාමාන්‍ය අච්චුව
-    public TaskModel(String title, String description, boolean isCompleted) {
+    public TaskModel(String title, String description, boolean isCompleted, String category, String priority, int priorityLevel, String dateText, String timeText) {
         this.title = title;
         this.description = description;
         this.isCompleted = isCompleted;
+        this.category = category;
+        this.priority = priority;
+        this.priorityLevel = priorityLevel;
+        this.dateText = dateText;
+        this.timeText = timeText;
     }
 
-    // දත්ත එළියට ගන්න ක්‍රම (Getters)
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isCompleted() {
-        return isCompleted;
-    }
+    // Getters
+    public String getTaskId() { return taskId; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public boolean isCompleted() { return isCompleted; }
+    public String getCategory() { return category; }
+    public String getPriority() { return priority; }
+    public int getPriorityLevel() { return priorityLevel; }
+    public String getDateText() { return dateText; }
+    public String getTimeText() { return timeText; }
 }

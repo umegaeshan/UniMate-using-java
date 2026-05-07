@@ -1,5 +1,6 @@
 package com.example.unimate;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-// Firebase වැඩ වලට අවශ්‍ය දේවල්
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -37,27 +35,37 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         holder.tvTaskTitle.setText(currentTask.getTitle());
         holder.tvTaskDesc.setText(currentTask.getDescription());
+        holder.tvDisplayDate.setText(currentTask.getDateText());
+        holder.tvDisplayTime.setText(currentTask.getTimeText());
 
-        // කලින් සේව් වෙලා තියෙන විදිහට හරි ලකුණ දානවා හෝ අයින් කරනවා
-        // මේක හරිම වැදගත්: Listener එක දාන්න කලින් අපි මේක Set කරන්න ඕනේ. නැත්නම් කේතය පැටලෙනවා.
+        if (currentTask.getCategory() != null) {
+            holder.tvCategoryBadge.setText(currentTask.getCategory());
+        }
+
+        if (currentTask.getPriority() != null) {
+            holder.tvPriorityBadge.setText(currentTask.getPriority());
+            if (currentTask.getPriorityLevel() == 1) {
+                holder.tvPriorityBadge.setBackgroundColor(Color.parseColor("#D32F2F"));
+            } else if (currentTask.getPriorityLevel() == 2) {
+                holder.tvPriorityBadge.setBackgroundColor(Color.parseColor("#F57C00"));
+            } else {
+                holder.tvPriorityBadge.setBackgroundColor(Color.parseColor("#388E3C"));
+            }
+        }
+
         holder.checkCompleted.setOnCheckedChangeListener(null);
         holder.checkCompleted.setChecked(currentTask.isCompleted());
 
-        // 1. Firebase සම්බන්ධතා මෙතනට ගන්නවා
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // 2. Checkbox එක (හරි ලකුණ) එබුවම වෙන දේ
         holder.checkCompleted.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Firebase එකේ තියෙන මේ Task එක හොයාගෙන, ඒකෙ 'isCompleted' කියන එක Update කරනවා
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
                     .update("isCompleted", isChecked);
         });
 
-        // 3. Delete (කුණු කූඩය) එබුවම වෙන දේ
         holder.imgDelete.setOnClickListener(v -> {
-            // Firebase එකෙන් ඒ අදාළ Task එක සදහටම මකලා (Delete) දානවා
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
                     .delete()
@@ -68,21 +76,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     @Override
-    public int getItemCount() {
-        return taskList.size();
-    }
+    public int getItemCount() { return taskList.size(); }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTaskTitle, tvTaskDesc;
+        TextView tvTaskTitle, tvTaskDesc, tvPriorityBadge, tvCategoryBadge, tvDisplayDate, tvDisplayTime;
         CheckBox checkCompleted;
-        ImageView imgDelete; // අලුතින් ආපු කුණු කූඩය
+        ImageView imgDelete;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskTitle = itemView.findViewById(R.id.tvTaskTitle);
             tvTaskDesc = itemView.findViewById(R.id.tvTaskDesc);
+            tvPriorityBadge = itemView.findViewById(R.id.tvPriorityBadge);
+            tvCategoryBadge = itemView.findViewById(R.id.tvCategoryBadge);
+            tvDisplayDate = itemView.findViewById(R.id.tvDisplayDate);
+            tvDisplayTime = itemView.findViewById(R.id.tvDisplayTime);
             checkCompleted = itemView.findViewById(R.id.checkCompleted);
-            imgDelete = itemView.findViewById(R.id.imgDelete); // XML එකේ අයිකන් එක අල්ලගන්නවා
+            imgDelete = itemView.findViewById(R.id.imgDelete);
         }
     }
 }

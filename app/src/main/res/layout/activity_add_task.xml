@@ -1,146 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#F8F9FA">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Task"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/etTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Task Name"
+        android:padding="15dp"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Description"
+        android:gravity="top"
+        android:padding="15dp"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginBottom="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Task"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="24dp"/>
-
-        <EditText
-            android:id="@+id/etTaskName"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Add Task Name"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/etTaskDesc"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Description"
-            android:gravity="top|left"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
-
-            <Button
-                android:id="@+id/btnPriority"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Select Priority"
-                android:textAllCaps="false"
-                android:backgroundTint="#7E57C2"
-                android:layout_marginRight="8dp"/>
-
-            <Button
-                android:id="@+id/btnCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Category"
-                android:textAllCaps="false"
-                android:backgroundTint="#7E57C2"
-                android:layout_marginLeft="8dp"/>
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#EFE5FD">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select date"
-                    android:textColor="#5A3A8A"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/tvSelectedDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Enter date"
-                    android:textSize="24sp"
-                    android:textColor="#000000"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#EFE5FD">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Enter time"
-                    android:textColor="#5A3A8A"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/tvSelectedTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="20 : 00 PM"
-                    android:textSize="36sp"
-                    android:textColor="#5A3A8A"
-                    android:textAlignment="center"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp">
 
         <Button
-            android:id="@+id/btnSubmitTaskFinal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Add Task"
+            android:id="@+id/btnPriority"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:text="Priority"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4B3B8B"
-            android:textSize="18sp"/>
+            android:backgroundTint="#5E35B1"
+            app:cornerRadius="10dp"/>
 
+        <Button
+            android:id="@+id/btnCategory"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="Category"
+            android:textAllCaps="false"
+            android:backgroundTint="#5E35B1"
+            app:cornerRadius="10dp"/>
     </LinearLayout>
-</ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Deadline Date"
+        android:layout_marginBottom="5dp"
+        android:textColor="#424242"/>
+    <EditText
+        android:id="@+id/etSelectedDate"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Click to select date"
+        android:padding="15dp"
+        android:focusable="false"
+        android:clickable="true"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginBottom="15dp"
+        android:drawableEnd="@android:drawable/ic_menu_my_calendar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Time"
+        android:layout_marginBottom="5dp"
+        android:textColor="#424242"/>
+    <EditText
+        android:id="@+id/etSelectedTime"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Click to select time"
+        android:padding="15dp"
+        android:focusable="false"
+        android:clickable="true"
+        android:background="@android:drawable/editbox_background"
+        android:layout_marginBottom="30dp"
+        android:drawableEnd="@android:drawable/ic_menu_recent_history"/>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Add Task"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#5E35B1"
+        app:cornerRadius="30dp"/>
+
+</LinearLayout>
