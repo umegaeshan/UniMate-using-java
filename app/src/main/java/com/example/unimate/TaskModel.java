@@ -2,19 +2,21 @@ package com.example.unimate;
 
 public class TaskModel {
 
-    // ටාස්ක් එකක තියෙන විස්තර (Variables)
     String title;
     String description;
-    boolean isCompleted; // වැඩේ ඉවරද නැද්ද කියලා බලන්න
+    boolean isCompleted;
 
-    // Constructor (මේ අච්චුවෙන් ටාස්ක් එකක් හදද්දී දෙන විස්තර)
+    // 1. Firebase එකට දත්ත පුරවන්න ඕනේ කරන "හිස් අච්චුව" (අලුතින් එකතු කළ කොටස)
+    public TaskModel() {
+    }
+
+    // 2. සාමාන්‍ය අච්චුව (කලින් තිබ්බ එක)
     public TaskModel(String title, String description, boolean isCompleted) {
         this.title = title;
         this.description = description;
         this.isCompleted = isCompleted;
     }
 
-    // Getters (ඇතුලේ තියෙන විස්තර එළියට ගන්න පාවිච්චි කරන ක්‍රම)
     public String getTitle() {
         return title;
     }

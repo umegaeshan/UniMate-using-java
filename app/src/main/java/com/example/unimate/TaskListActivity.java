@@ -1,9 +1,23 @@
 package com.example.unimate;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+// Firebase අදාළ දේවල්
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,41 +27,73 @@ public class TaskListActivity extends AppCompatActivity {
     TaskAdapter taskAdapter;
     List<TaskModel> myTasks;
 
+    // Firebase දේවල් හඳුන්වා දීම
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        // 1. XML එකේ තියෙන RecyclerView එක හොයාගන්නවා
+        // 1. Firebase මුරකාරයාවයි පොතයි වැඩට ගන්නවා
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
+        recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
 
-        // '+' බොත්තම (Floating Action Button) කේතයට සම්බන්ධ කිරීම
-        com.google.android.material.floatingactionbutton.FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+        // 2. හිස් ලිස්ට් එකක් හදලා ඒක Adapter (පාලම) හරහා තිරයට සම්බන්ධ කරනවා
+        myTasks = new ArrayList<>();
+        taskAdapter = new TaskAdapter(myTasks);
+        recyclerViewTasks.setAdapter(taskAdapter);
 
-        // ඒ බොත්තම එබුවම අලුත් Add Task පිටුවට යාම
-        fabAddTask.setOnClickListener(new android.view.View.OnClickListener() {
+        // 3. යට තියෙන '+' බොත්තම එබුවම Add Task පිටුවට යන කේතය
+        FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+        fabAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(android.view.View v) {
-                android.content.Intent intent = new android.content.Intent(TaskListActivity.this, AddTaskActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskListActivity.this, AddTaskActivity.class);
                 startActivity(intent);
             }
         });
 
-        // 2. ලිස්ට් එක පේන්න ඕනේ උඩ ඉඳන් පහළට කියලා කියනවා
-        recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
+        // 4. Firebase එකෙන් දත්ත ඇදලා ගන්න අපි හදපු ක්‍රමය (Method) මෙතනින් කෝල් කරනවා
+        fetchTasksFromFirebase();
+    }
 
-        // 3. අපේ දත්ත (Tasks) දාන්න හිස් ලිස්ට් එකක් හදාගන්නවා
-        myTasks = new ArrayList<>();
+    // Firebase එකෙන් දත්ත ඇදලා ගන්නා ක්‍රමය
+    private void fetchTasksFromFirebase() {
+        // කවුරුහරි ලොග් වෙලා නැත්නම් මේක කරන්න එපා කියලා කියනවා
+        if (mAuth.getCurrentUser() == null) return;
 
-        // 4. ටෙස්ට් කරන්න බොරු දත්ත ටිකක් ඇතුල් කරනවා (අච්චුව පාවිච්චි කරලා)
-        myTasks.add(new TaskModel("Programming I", "Complete the assignment questions", false));
-        myTasks.add(new TaskModel("Application Lab", "Create the student models and routes", true));
-        myTasks.add(new TaskModel("Maths", "Do the tutorial 03", false));
+        // ලොග් වෙලා ඉන්න ළමයාගේ ID එක ගන්නවා (එයාගේ ෆෝල්ඩරේ හොයාගන්න)
+        String userId = mAuth.getCurrentUser().getUid();
 
-        // 5. අපි හදපු පාලමට (Adapter) අපේ දත්ත ටික දෙනවා
-        taskAdapter = new TaskAdapter(myTasks);
+        // Database එකේ ඒ ළමයාගේ "tasks" කියන ෆෝල්ඩරේ දිහා බලාගෙන ඉන්නවා (addSnapshotListener)
+        db.collection("users").document(userId).collection("tasks")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-        // 6. පාලම අරන් ගිහින් RecyclerView එකට සවි කරනවා
-        recyclerViewTasks.setAdapter(taskAdapter);
+                        // මොකක්හරි අවුලක් (Error) ආවොත් මැසේජ් එකක් දෙනවා
+                        if (error != null) {
+                            Toast.makeText(TaskListActivity.this, "Error loading tasks", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // පරණ ලිස්ට් එකේ දේවල් තියෙනවා නම් ඒක හිස් කරනවා (නැත්නම් එකම ටාස්ක් එක දෙපාරක් පෙනෙයි)
+                        myTasks.clear();
+
+                        // Firebase එකෙන් ආපු විස්තර එකින් එක අරගෙන අපේ අච්චුවට (TaskModel) දාලා ලිස්ට් එකට එකතු කරනවා
+                        for (DocumentSnapshot doc : value.getDocuments()) {
+                            TaskModel task = doc.toObject(TaskModel.class);
+                            myTasks.add(task);
+                        }
+
+                        // "අලුත් දේවල් ආවා, තිරය වෙනස් කරන්න" කියලා පාලමට (Adapter) දැනුම් දෙනවා
+                        taskAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 }
