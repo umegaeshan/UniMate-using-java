@@ -74,8 +74,9 @@ public class TaskListActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
             return true;
             } else if (id == R.id.nav_profile) {
-                Toast.makeText(TaskListActivity.this, "Profile Page Coming Soon!", Toast.LENGTH_SHORT).show();
-                return true;
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            overridePendingTransition(0, 0);
+            return true;
             }
             return false;
         });
