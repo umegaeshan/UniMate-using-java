@@ -1,20 +1,32 @@
 package com.example.unimate;
 
+// ID එක අල්ලගන්න අවශ්‍ය අලුත් කේතය
+import com.google.firebase.firestore.DocumentId;
+
 public class TaskModel {
+
+    // 1. Firebase එකෙන් දෙන ID එක සේව් කරගන්න තැන (මේක ගොඩක් වැදගත්!)
+    @DocumentId
+    String taskId;
 
     String title;
     String description;
     boolean isCompleted;
 
-    // 1. Firebase එකට දත්ත පුරවන්න ඕනේ කරන "හිස් අච්චුව" (අලුතින් එකතු කළ කොටස)
+    // හිස් අච්චුව
     public TaskModel() {
     }
 
-    // 2. සාමාන්‍ය අච්චුව (කලින් තිබ්බ එක)
+    // සාමාන්‍ය අච්චුව
     public TaskModel(String title, String description, boolean isCompleted) {
         this.title = title;
         this.description = description;
         this.isCompleted = isCompleted;
+    }
+
+    // දත්ත එළියට ගන්න ක්‍රම (Getters)
+    public String getTaskId() {
+        return taskId;
     }
 
     public String getTitle() {
