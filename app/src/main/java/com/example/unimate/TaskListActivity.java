@@ -68,9 +68,11 @@ public class TaskListActivity extends AppCompatActivity {
                 // Completed පිටුවට යන කේතය පසුව ලියමු, දැනට මැසේජ් එකක් පෙන්වමු
                 Toast.makeText(TaskListActivity.this, "Completed Tasks Coming Soon!", Toast.LENGTH_SHORT).show();
                 return true;
-            } else if (id == R.id.nav_dev) {
-                Toast.makeText(TaskListActivity.this, "Dev Info Page Coming Soon!", Toast.LENGTH_SHORT).show();
-                return true;
+            }  else if (id == R.id.nav_dev) {
+            // Dev Info බොත්තම එබුවම මේ අලුත් පිටුවට යනවා
+            startActivity(new Intent(getApplicationContext(), DevInfoActivity.class));
+            overridePendingTransition(0, 0);
+            return true;
             } else if (id == R.id.nav_profile) {
                 Toast.makeText(TaskListActivity.this, "Profile Page Coming Soon!", Toast.LENGTH_SHORT).show();
                 return true;
