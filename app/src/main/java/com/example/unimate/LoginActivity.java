@@ -1,5 +1,6 @@
 package com.example.unimate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // (අපි තාම Sign Up පිටුව හැදුවෙ නැති නිසා දැනට මැසේජ් එකක් විතරක් දෙමු)
-                Toast.makeText(LoginActivity.this, "Go to Register Page", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
