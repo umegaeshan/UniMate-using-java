@@ -61,7 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 // Password එකයි Email එකයි හරි නම්
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
                                     // ඊළඟට අපි ඇතුල් වෙන ප්‍රධාන පිටුව (Home Page) හැදුවාම,
                                     // මෙතනින් ඒ පිටුවට යන්න කේතය ලියනවා. දැනට මැසේජ් එකක් විතරක් එයි.

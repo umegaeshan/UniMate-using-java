@@ -6,26 +6,43 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+// Firebase මුරකාරයා ගේන්න
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
-    // 1. බොත්තම සඳහා විචල්‍යයක් (නමක්) හදාගන්නවා
     Button btnLetsStart;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 2. අපි කලින් හදපු XML ඩිසයින් එක මේකට සම්බන්ධ කරනවා
+
+        // 1. Firebase එක ඇහැරවලා වැඩට ගන්නවා
+        mAuth = FirebaseAuth.getInstance();
+
+        // 2. මෙන්න මෙතැනදී තමයි අපි බලන්නේ කවුරුහරි කලින් ලොග් වෙලා ඉන්නවද කියලා
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            // කෙනෙක් ලොග් වෙලා ඉන්නවා නම්, මේ පිටුව පෙන්වන්නේ නැතුව කෙලින්ම Task List එකට යන්න
+            Intent intent = new Intent(MainActivity.this, TaskListActivity.class);
+            startActivity(intent);
+            finish(); // මේ පිටුව වහලා දාන්න
+            return; // ඉතිරි කේත වැඩ කරන්න ඕනේ නැහැ
+        }
+
+        // 3. කවුරුත් ලොග් වෙලා නැත්නම් විතරක් Start පිටුව පෙන්වන්න
         setContentView(R.layout.activity_main);
 
-        // 3. XML එකේ තිබ්බ බොත්තම මේ නමට සම්බන්ධ කරනවා (ID එක හරහා)
+        // XML එකේ තියෙන බොත්තම කේතයට සම්බන්ධ කිරීම
         btnLetsStart = findViewById(R.id.btnLetsStart);
 
-        // 4. බොත්තම එබුවම මොකද වෙන්න ඕනේ කියලා ලියනවා
+        // 4. Let's Start බොත්තම එබුවම Login පිටුවට යාම
         btnLetsStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // බොත්තම එබුවම ඊළඟ පිටුවට යන්න Intent එකක් පාවිච්චි කරනවා.
-                // (දැනට LoginActivity කියලා පිටුවක් නැති නිසා මේක රතු පාටින් පෙන්නයි, ඒකට බයවෙන්න එපා)
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
