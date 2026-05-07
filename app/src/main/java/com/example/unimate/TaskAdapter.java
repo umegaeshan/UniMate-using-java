@@ -1,5 +1,6 @@
 package com.example.unimate;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,12 +60,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        // 1. Checkbox එක එබූ විට Firebase update කිරීම
         holder.checkCompleted.setOnCheckedChangeListener((buttonView, isChecked) -> {
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
                     .update("isCompleted", isChecked);
         });
 
+        // 2. Delete Button එකේ වැඩ (මෙන්න මෙතන වරහනක් වැරදී තිබුණා)
         holder.imgDelete.setOnClickListener(v -> {
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
@@ -72,6 +75,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(holder.itemView.getContext(), "Task Deleted", Toast.LENGTH_SHORT).show();
                     });
+        });
+
+        // 3. මුළු Task එකම Touch කළ විට Detail පිටුවට යෑම
+        // මේ කොටස Delete listener එකෙන් පිටත තිබිය යුතුයි
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), TaskDetailActivity.class);
+            intent.putExtra("taskId", currentTask.getTaskId());
+            intent.putExtra("title", currentTask.getTitle());
+            intent.putExtra("desc", currentTask.getDescription());
+            intent.putExtra("date", currentTask.getDateText());
+            intent.putExtra("category", currentTask.getCategory());
+            intent.putExtra("priority", currentTask.getPriority());
+            intent.putExtra("isCompleted", currentTask.isCompleted());
+            v.getContext().startActivity(intent);
         });
     }
 
