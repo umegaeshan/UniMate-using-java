@@ -21,6 +21,18 @@ public class TaskListActivity extends AppCompatActivity {
         // 1. XML එකේ තියෙන RecyclerView එක හොයාගන්නවා
         recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
 
+        // '+' බොත්තම (Floating Action Button) කේතයට සම්බන්ධ කිරීම
+        com.google.android.material.floatingactionbutton.FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+
+        // ඒ බොත්තම එබුවම අලුත් Add Task පිටුවට යාම
+        fabAddTask.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                android.content.Intent intent = new android.content.Intent(TaskListActivity.this, AddTaskActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // 2. ලිස්ට් එක පේන්න ඕනේ උඩ ඉඳන් පහළට කියලා කියනවා
         recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
 
