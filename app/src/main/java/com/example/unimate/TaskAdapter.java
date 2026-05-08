@@ -92,6 +92,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         });
     }
 
+    public void setFilteredList(List<TaskModel> filteredList) {
+        this.taskList = filteredList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() { return taskList.size(); }
 
