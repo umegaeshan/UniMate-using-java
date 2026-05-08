@@ -56,7 +56,11 @@ public class TaskListActivity extends AppCompatActivity {
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 return true;
-            }
+            } else if (id == R.id.nav_completed) {
+            startActivity(new Intent(getApplicationContext(), CompletedTasksActivity.class));
+            overridePendingTransition(0, 0);
+            return true;
+        }
             return id == R.id.nav_home;
         });
 
@@ -65,9 +69,14 @@ public class TaskListActivity extends AppCompatActivity {
 
     private void fetchTasksFromFirebase() {
         if (mAuth.getCurrentUser() == null) return;
-        db.collection("users").document(mAuth.getCurrentUser().getUid()).collection("tasks")
+        String userId = mAuth.getCurrentUser().getUid();
+
+        // මෙහිදී .whereEqualTo("isCompleted", false) ඇතුළත් කර ඇත
+        db.collection("users").document(userId).collection("tasks")
+                .whereEqualTo("isCompleted", false)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) return;
+
                     myTasks.clear();
                     for (DocumentSnapshot doc : value.getDocuments()) {
                         TaskModel task = doc.toObject(TaskModel.class);
@@ -79,5 +88,6 @@ public class TaskListActivity extends AppCompatActivity {
                     Collections.sort(myTasks, (t1, t2) -> Integer.compare(t1.getPriorityLevel(), t2.getPriorityLevel()));
                     taskAdapter.notifyDataSetChanged();
                 });
+
     }
 }

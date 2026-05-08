@@ -160,7 +160,11 @@ public class ProfileActivity extends AppCompatActivity {
                 return true;
             } else if (id == R.id.nav_profile) {
                 return true;
-            }
+            }else if (id == R.id.nav_completed) {
+            startActivity(new Intent(getApplicationContext(), CompletedTasksActivity.class));
+            overridePendingTransition(0, 0);
+            return true;
+        }
             return false;
         });
     }
