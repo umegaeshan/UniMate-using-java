@@ -22,10 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     EditText etEmail, etPassword, etMobile;
     TextView tvProfileName;
     Button btnLogout, btnUpdate;
-
     boolean isEditing = false;
-
-    // දත්ත Cancel කරද්දී ආපහු දාන්න මතක තියාගන්න Variables
     String currentMobile = "";
 
     @Override
@@ -44,162 +41,100 @@ public class ProfileActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        // මුලින්ම Database එකෙන් විස්තර අරගෙන පෙට්ටි වලට දානවා
         if (user != null) {
             etEmail.setText(user.getEmail());
             etPassword.setText("........");
-
             db.collection("users").document(user.getUid())
                     .get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
-
-                            // නම අරගෙන Text එකට දානවා
                             String name = documentSnapshot.getString("username");
-                            if (name != null) {
-                                tvProfileName.setText(name);
-                            } else {
-                                tvProfileName.setText("User");
-                            }
-
-                            // ෆෝන් නම්බර් එක අරගෙන පෙට්ටියට දානවා
+                            tvProfileName.setText(name != null ? name : "User");
                             currentMobile = documentSnapshot.getString("mobile");
                             if (currentMobile != null && !currentMobile.trim().isEmpty()) {
                                 etMobile.setText(maskMobileNumber(currentMobile));
-                            } else {
-                                currentMobile = "";
-                                etMobile.setText(""); // නම්බර් එකක් නැත්නම් හිස්ව තියෙනවා
                             }
                         }
                     });
         }
 
-        // ==============================================
-        // Update / Save බොත්තම
-        // ==============================================
         btnUpdate.setOnClickListener(v -> {
             if (!isEditing) {
-                // UPDATE එබුවම
                 isEditing = true;
                 btnUpdate.setText("Save");
                 btnLogout.setText("Cancel");
-
                 etMobile.setEnabled(true);
                 etPassword.setEnabled(true);
-
-                etPassword.setText(""); // අලුත් එකක් ගහන්න හිස් කරනවා
-                etMobile.setText(currentMobile); // Edit කරන්න ලේසි වෙන්න ඇත්ත අංකය පෙන්නනවා
-
+                etPassword.setText("");
+                etMobile.setText(currentMobile);
             } else {
-                // SAVE එබුවම
                 if (user != null) {
                     String newMobile = etMobile.getText().toString();
                     String newPassword = etPassword.getText().toString();
-
                     if (!newPassword.isEmpty()) {
-                        user.updatePassword(newPassword).addOnCompleteListener(task -> {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(this, "Failed to update password", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        user.updatePassword(newPassword);
                     }
-
                     Map<String, Object> userData = new HashMap<>();
                     userData.put("mobile", newMobile);
-
                     db.collection("users").document(user.getUid())
                             .set(userData, SetOptions.merge())
                             .addOnSuccessListener(aVoid -> {
-
-                                currentMobile = newMobile; // අලුත් එක මතක තියාගන්නවා
+                                currentMobile = newMobile;
                                 lockProfileFields();
-                                Toast.makeText(this, "Profile Saved Successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Profile Saved!", Toast.LENGTH_SHORT).show();
                             });
                 }
             }
         });
 
-        // ==============================================
-        // Log Out / Cancel බොත්තම
-        // ==============================================
         btnLogout.setOnClickListener(v -> {
             if (isEditing) {
-                // CANCEL එබුවම
-                etMobile.setText(currentMobile); // පරණ දත්ත ආපහු දානවා
-                lockProfileFields(); // ආපහු Lock කරනවා
-
+                lockProfileFields();
             } else {
-                // LOG OUT එබුවම
                 mAuth.signOut();
-                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 finish();
             }
         });
 
-        // ==============================================
-        // Navigation Bar
-        // ==============================================
+        // Navigation Bar Fix
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
-
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
+                startActivity(new Intent(ProfileActivity.this, TaskListActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (id == R.id.nav_completed) {
-                Toast.makeText(this, "Completed Soon", Toast.LENGTH_SHORT).show();
-                return true;
-            } else if (id == R.id.nav_dev) {
-                startActivity(new Intent(getApplicationContext(), DevInfoActivity.class));
+                startActivity(new Intent(ProfileActivity.this, CompletedTasksActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
-            } else if (id == R.id.nav_profile) {
+            } else if (id == R.id.nav_dev) {
+                startActivity(new Intent(ProfileActivity.this, DevInfoActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
                 return true;
-            }else if (id == R.id.nav_completed) {
-            startActivity(new Intent(getApplicationContext(), CompletedTasksActivity.class));
-            overridePendingTransition(0, 0);
-            return true;
-        }
-            return false;
+            }
+            return id == R.id.nav_profile;
         });
     }
 
-    // පෙට්ටි ලොක් කරන ක්‍රමය
     private void lockProfileFields() {
         isEditing = false;
         btnUpdate.setText("Update");
         btnLogout.setText("Log Out");
-
         etMobile.setEnabled(false);
         etPassword.setEnabled(false);
-
         etPassword.setText("........");
-
-        // සේව්/කැන්සල් කළාට පස්සේ ආපහු තරු දාලා පෙන්වනවා
         if(currentMobile != null && !currentMobile.trim().isEmpty()) {
             etMobile.setText(maskMobileNumber(currentMobile));
-        } else {
-            etMobile.setText("");
         }
     }
 
-    // ෆෝන් නම්බර් එක මැදට තරු (***) දාන ක්‍රමය
     private String maskMobileNumber(String mobile) {
-        if (mobile == null || mobile.trim().isEmpty()) {
-            return "";
-        }
-        mobile = mobile.trim();
-        if (mobile.length() <= 6) {
-            return mobile;
-        }
-
-        String firstThree = mobile.substring(0, 3);
-        String lastThree = mobile.substring(mobile.length() - 3);
-        return firstThree + "***" + lastThree;
+        if (mobile == null || mobile.length() <= 6) return mobile;
+        return mobile.substring(0, 3) + "***" + mobile.substring(mobile.length() - 3);
     }
 }

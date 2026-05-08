@@ -48,20 +48,36 @@ public class TaskListActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_dev) {
-                startActivity(new Intent(getApplicationContext(), DevInfoActivity.class));
+
+            if (id == R.id.nav_home) {
+                // දැනටමත් ඉන්නේ Home එකේ නිසා මොකුත් කරන්නේ නැහැ
                 return true;
-            } else if (id == R.id.nav_profile) {
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            }
+            else if (id == R.id.nav_completed) {
+                // කෙළින්ම Completed පිටුවට යනවා
+                startActivity(new Intent(TaskListActivity.this, CompletedTasksActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
                 return true;
-            } else if (id == R.id.nav_completed) {
-            startActivity(new Intent(getApplicationContext(), CompletedTasksActivity.class));
-            overridePendingTransition(0, 0);
-            return true;
-        }
-            return id == R.id.nav_home;
+            }
+            else if (id == R.id.nav_dev) {
+                // කෙළින්ම Dev Info පිටුවට යනවා
+                startActivity(new Intent(TaskListActivity.this, DevInfoActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            else if (id == R.id.nav_profile) {
+                // කෙළින්ම Profile පිටුවට යනවා
+                startActivity(new Intent(TaskListActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
         });
 
         fetchTasksFromFirebase();

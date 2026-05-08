@@ -38,7 +38,7 @@ public class CompletedTasksActivity extends AppCompatActivity {
         if (userId == null) return;
 
         FirebaseFirestore.getInstance().collection("users").document(userId).collection("tasks")
-                .whereEqualTo("isCompleted", true) // මෙහිදී true ඒවා පමණක් ගනී
+                .whereEqualTo("isCompleted", true)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) return;
                     completedTasks.clear();
@@ -56,18 +56,30 @@ public class CompletedTasksActivity extends AppCompatActivity {
     private void setupNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_completed);
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+
             if (id == R.id.nav_home) {
-                startActivity(new Intent(this, TaskListActivity.class));
+                // මෙතනින් තමයි ආපහු Home (TaskListActivity) එකට යන්නේ
+                startActivity(new Intent(CompletedTasksActivity.this, TaskListActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_completed) {
+                return true; // දැනට ඉන්නේ මේ පිටුවේ නිසා මොකුත් කරන්නේ නැහැ
+            } else if (id == R.id.nav_dev) {
+                startActivity(new Intent(CompletedTasksActivity.this, DevInfoActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (id == R.id.nav_profile) {
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(CompletedTasksActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
                 return true;
             }
-            return id == R.id.nav_completed;
+            return false;
         });
     }
 }
