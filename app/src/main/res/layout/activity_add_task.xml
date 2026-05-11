@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:hint="Task Name"
+                android:textColorHint="#000000"
                 android:padding="15dp"
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
@@ -73,6 +74,7 @@
                 android:layout_height="100dp"
                 android:hint="Description"
                 android:gravity="top"
+                android:textColorHint="#000000"
                 android:padding="15dp"
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
@@ -117,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:hint="Click to select date"
+                android:textColorHint="#000000"
                 android:padding="15dp"
                 android:focusable="false"
                 android:clickable="true"
@@ -135,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:hint="Click to select time"
+                android:textColorHint="#000000"
                 android:padding="15dp"
                 android:focusable="false"
                 android:clickable="true"

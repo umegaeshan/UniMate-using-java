@@ -76,6 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="30dp"/>
@@ -86,6 +88,7 @@
                 android:layout_height="55dp"
                 android:hint="Email"
                 android:padding="15dp"
+                android:textColorHint="#000000"
                 android:enabled="false"
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
@@ -95,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:hint="Mobile Number"
+                android:textColorHint="#000000"
                 android:padding="15dp"
                 android:enabled="false"
                 android:background="@android:drawable/editbox_background"
@@ -105,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:hint="Password"
+                android:textColorHint="#000000"
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:enabled="false"
@@ -116,7 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="Update"
-                android:backgroundTint="#5E35B1"
+                android:textColor="#FDFDFD"
+                android:backgroundTint="#8163F2"
                 android:layout_marginBottom="15dp"/>
 
             <Button
