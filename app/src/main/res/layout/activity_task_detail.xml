@@ -138,6 +138,7 @@
         android:layout_above="@id/bottomNavigation"
         android:layout_margin="20dp"
         android:text="Mark as Complete"
+        android:textColor="#FFFFFF"
         android:textAllCaps="false"
         android:backgroundTint="#5E35B1"
         app:cornerRadius="28dp"/>

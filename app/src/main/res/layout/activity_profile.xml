@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:textColor="#000000"
+                android:textColor="#383737"
                 android:textColorHint="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -88,6 +88,7 @@
                 android:layout_height="55dp"
                 android:hint="Email"
                 android:padding="15dp"
+                android:textColor="#383737"
                 android:textColorHint="#000000"
                 android:enabled="false"
                 android:background="@android:drawable/editbox_background"
@@ -100,6 +101,7 @@
                 android:hint="Mobile Number"
                 android:textColorHint="#000000"
                 android:padding="15dp"
+                android:textColor="#383737"
                 android:enabled="false"
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
@@ -113,6 +115,7 @@
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:enabled="false"
+                android:textColor="#000000"
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="30dp"/>
 

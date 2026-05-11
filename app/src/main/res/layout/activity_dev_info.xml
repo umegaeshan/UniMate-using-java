@@ -99,6 +99,17 @@
                 android:gravity="center"
                 android:layout_marginBottom="10dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student No : 2023t01865"
+
+
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"/>
+
         </LinearLayout>
     </ScrollView>
 
