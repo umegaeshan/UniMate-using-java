@@ -12,6 +12,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniMate">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DevInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CompletedTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:exported="false" />
+        <activity android:name=".TaskDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

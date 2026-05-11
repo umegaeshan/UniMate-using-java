@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Sign Up"
+            android:textColor="#000000"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/etSignUpUsername"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Username"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/etSignUpPassword"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/etSignUpConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/etSignUpEmail"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/etSignUpMobile"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:drawable/editbox_background"
+            android:hint="Mobile No"
+            android:inputType="phone"
+            android:padding="12dp" />
+
+        <Button
+            android:id="@+id/btnSignUpSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#5A3A8A"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvLoginNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Already have account? Login Now"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>
