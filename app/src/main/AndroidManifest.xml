@@ -32,6 +32,9 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:exported="false" />
         <activity android:name=".TaskDetailActivity"
             android:exported="false" />
         <activity

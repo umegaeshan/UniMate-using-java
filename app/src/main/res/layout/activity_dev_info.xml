@@ -5,88 +5,100 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <TextView
-        android:id="@+id/tvTopTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dev Info"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/tvTopTitle"
-        android:layout_above="@+id/btnExit"
-        android:gravity="center"
-        android:padding="24dp">
+        android:padding="20dp"
+        android:background="#F8F9FA">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="4dp"
-            android:layout_marginBottom="24dp">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developer Info"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_profile"
-                android:scaleType="centerCrop"
-                android:background="#E2D4F0"
-                app:tint="#5E35B1"
-                android:padding="20dp"/>
-        </androidx.cardview.widget.CardView>
+                android:id="@+id/btnNotification"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_popup_reminder"
+                android:layout_marginEnd="20dp"
+                app:tint="#000000"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Umega Eshan"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="8dp"/>
+            <ImageView
+                android:id="@+id/btnSettings"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="#000000"/>
+        </LinearLayout>
+    </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Student No: 2023t01865"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#424242"
-            android:layout_marginBottom="24dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_above="@id/bottomNavigation"
+        android:padding="20dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="I am an undergraduate student passionate about mobile app development and UI/UX design."
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:textColor="#616161"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="24dp"/>
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Release version"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#424242"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="75dp"
+                android:layout_marginBottom="20dp"
+                app:cardElevation="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="v1.0 Beta"
-            android:textSize="14sp"
-            android:textColor="#757575"
-            android:layout_marginTop="4dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/umega_profile"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UniMate Task Manager"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version 1.0.0"
+                android:textSize="16sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="30dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Developed by Umega Eshan"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -95,35 +107,6 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
         app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
-        app:itemIconTint="#1e3a8a"
-        app:itemTextColor="#1e3a8a" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabDummy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNavigation"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#A020F0"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="#FFFFFF"/>
-
-    <Button
-        android:id="@+id/btnExit"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_above="@+id/fabDummy"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="16dp"
-        android:text="Exit"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#5E35B1"
-        app:cornerRadius="28dp"/>
+        app:labelVisibilityMode="labeled" />
 
 </RelativeLayout>

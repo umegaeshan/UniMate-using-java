@@ -1,11 +1,13 @@
 package com.example.unimate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +44,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.detailTabLayout);
         btnComplete = findViewById(R.id.btnMarkComplete);
         btnDelete = findViewById(R.id.btnDelete);
+        btnEdit = findViewById(R.id.btnEdit); // Edit බොත්තම අල්ලගැනීම
 
         // මුලින් දත්ත සෙට් කරනවා
         tvTitle.setText(title);
@@ -63,7 +66,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        // Mark as Complete
+        // 1. Mark as Complete Logic
         btnComplete.setOnClickListener(v -> {
             FirebaseFirestore.getInstance().collection("users")
                     .document(FirebaseAuth.getInstance().getUid())
@@ -75,16 +78,50 @@ public class TaskDetailActivity extends AppCompatActivity {
                     });
         });
 
-        // Delete Task
+        // 2. Delete Task Logic
         btnDelete.setOnClickListener(v -> {
             FirebaseFirestore.getInstance().collection("users")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("tasks").document(taskId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Task Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Task Deleted Successfully", Toast.LENGTH_SHORT).show();
                         finish();
                     });
         });
+
+        // 3. Edit Task Logic (දත්ත ටික අරගෙන EditTaskActivity එකට යෑම)
+        btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditTaskActivity.class);
+            intent.putExtra("taskId", taskId);
+            intent.putExtra("title", title);
+            intent.putExtra("desc", desc);
+            intent.putExtra("date", date);
+            intent.putExtra("category", category);
+            intent.putExtra("priority", priority);
+            startActivity(intent);
+        });
+
+        // 4. Bottom Navigation Logic
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+                    startActivity(new Intent(this, TaskListActivity.class));
+                    finish(); return true;
+                } else if (id == R.id.nav_completed) {
+                    startActivity(new Intent(this, CompletedTasksActivity.class));
+                    finish(); return true;
+                } else if (id == R.id.nav_dev) {
+                    startActivity(new Intent(this, DevInfoActivity.class));
+                    finish(); return true;
+                } else if (id == R.id.nav_profile) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    finish(); return true;
+                }
+                return false;
+            });
+        }
     }
 }
