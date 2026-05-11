@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnLetsStart;
     FirebaseAuth mAuth;
 
     @Override
@@ -37,15 +36,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // XML එකේ තියෙන බොත්තම කේතයට සම්බන්ධ කිරීම
-        btnLetsStart = findViewById(R.id.btnLetsStart);
+        Button btnLetsStart = findViewById(R.id.btnLetsStart);
 
-        // 4. Let's Start බොත්තම එබුවම Login පිටුවට යාම
-        btnLetsStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        // 4. Let's Start බොත්තම එබුවම Onboarding පිටුවට යාම පමණක් මෙහි තබා ඇත
+        btnLetsStart.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, OnboardingActivity.class));
+            finish();
         });
     }
 }
