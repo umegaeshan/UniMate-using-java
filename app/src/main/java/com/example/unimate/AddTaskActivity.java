@@ -2,6 +2,7 @@ package com.example.unimate;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,6 +80,54 @@ public class AddTaskActivity extends AppCompatActivity {
             });
             p.show();
         });
+
+        // Bottom Navigation Bar එකට පණ දීම
+        com.google.android.material.bottomnavigation.BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(AddTaskActivity.this, TaskListActivity.class));
+                overridePendingTransition(0, 0); finish(); return true;
+            } else if (id == R.id.nav_completed) {
+                startActivity(new Intent(AddTaskActivity.this, CompletedTasksActivity.class));
+                overridePendingTransition(0, 0); finish(); return true;
+            } else if (id == R.id.nav_dev) {
+                startActivity(new Intent(AddTaskActivity.this, DevInfoActivity.class));
+                overridePendingTransition(0, 0); finish(); return true;
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(AddTaskActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0); finish(); return true;
+            }
+            return false;
+        });
+
+        // Top Bar Icons (Settings & Notification)
+        android.widget.ImageView btnSettings = findViewById(R.id.btnSettings);
+        android.widget.ImageView btnNotification = findViewById(R.id.btnNotification);
+
+        if (btnSettings != null) {
+            btnSettings.setOnClickListener(v -> {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setTitle("Settings");
+                int currentMode = androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode();
+                boolean isDarkMode = (currentMode == androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES);
+                String[] options = {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"};
+                builder.setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(isDarkMode ?
+                                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO : androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                });
+                builder.show();
+            });
+        }
+
+        if (btnNotification != null) {
+            btnNotification.setOnClickListener(v ->
+                    android.widget.Toast.makeText(this, "No new notifications", android.widget.Toast.LENGTH_SHORT).show()
+            );
+        }
 
         // 5. Add Task to Firebase
         btnAddTask.setOnClickListener(v -> {

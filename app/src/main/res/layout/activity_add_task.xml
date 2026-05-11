@@ -1,114 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
     android:background="#F8F9FA">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add New Task"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="25dp"
-        android:textColor="#000000"/>
-
-    <EditText
-        android:id="@+id/etTaskName"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Task Name"
-        android:padding="15dp"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginBottom="15dp"/>
-
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:hint="Description"
-        android:gravity="top"
-        android:padding="15dp"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginBottom="15dp"/>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
+        android:padding="20dp"
+        android:background="#F8F9FA">
 
-        <Button
-            android:id="@+id/btnPriority"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:text="Priority"
-            android:textAllCaps="false"
-            android:backgroundTint="#5E35B1"
-            app:cornerRadius="10dp"/>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Task"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"/>
 
-        <Button
-            android:id="@+id/btnCategory"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:text="Category"
-            android:textAllCaps="false"
-            android:backgroundTint="#5E35B1"
-            app:cornerRadius="10dp"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/btnNotification"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_popup_reminder"
+                android:layout_marginEnd="20dp"
+                app:tint="#000000"/>
+
+            <ImageView
+                android:id="@+id/btnSettings"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="#000000"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_above="@id/bottomNavigation"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Task Name"
+                android:padding="15dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginBottom="15dp"/>
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="Description"
+                android:gravity="top"
+                android:padding="15dp"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginBottom="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp">
+
+                <Button
+                    android:id="@+id/btnPriority"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:text="Priority"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#5E35B1"
+                    app:cornerRadius="10dp"/>
+
+                <Button
+                    android:id="@+id/btnCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="Category"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#5E35B1"
+                    app:cornerRadius="10dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Deadline Date"
+                android:layout_marginBottom="5dp"
+                android:textColor="#424242"/>
+            <EditText
+                android:id="@+id/etSelectedDate"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Click to select date"
+                android:padding="15dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginBottom="15dp"
+                android:drawableEnd="@android:drawable/ic_menu_my_calendar"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Time"
+                android:layout_marginBottom="5dp"
+                android:textColor="#424242"/>
+            <EditText
+                android:id="@+id/etSelectedTime"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Click to select time"
+                android:padding="15dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:background="@android:drawable/editbox_background"
+                android:layout_marginBottom="30dp"
+                android:drawableEnd="@android:drawable/ic_menu_recent_history"/>
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Add Task"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:backgroundTint="#5E35B1"
+                app:cornerRadius="30dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Deadline Date"
-        android:layout_marginBottom="5dp"
-        android:textColor="#424242"/>
-    <EditText
-        android:id="@+id/etSelectedDate"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Click to select date"
-        android:padding="15dp"
-        android:focusable="false"
-        android:clickable="true"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginBottom="15dp"
-        android:drawableEnd="@android:drawable/ic_menu_my_calendar"/>
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Time"
-        android:layout_marginBottom="5dp"
-        android:textColor="#424242"/>
-    <EditText
-        android:id="@+id/etSelectedTime"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Click to select time"
-        android:padding="15dp"
-        android:focusable="false"
-        android:clickable="true"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginBottom="30dp"
-        android:drawableEnd="@android:drawable/ic_menu_recent_history"/>
-
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Add Task"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:backgroundTint="#5E35B1"
-        app:cornerRadius="30dp"/>
-
-</LinearLayout>
+</RelativeLayout>
