@@ -35,7 +35,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TaskModel currentTask = taskList.get(position);
 
         holder.tvTaskTitle.setText(currentTask.getTitle());
-        holder.tvTaskDesc.setText(currentTask.getDescription());
+        // Description එක අයින් කළා!
         holder.tvDisplayDate.setText(currentTask.getDateText());
         holder.tvDisplayTime.setText(currentTask.getTimeText());
 
@@ -60,14 +60,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // 1. Checkbox එක එබූ විට Firebase update කිරීම
         holder.checkCompleted.setOnCheckedChangeListener((buttonView, isChecked) -> {
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
                     .update("isCompleted", isChecked);
         });
 
-        // 2. Delete Button එකේ වැඩ (මෙන්න මෙතන වරහනක් වැරදී තිබුණා)
         holder.imgDelete.setOnClickListener(v -> {
             db.collection("users").document(userId).collection("tasks")
                     .document(currentTask.getTaskId())
@@ -77,13 +75,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     });
         });
 
-        // 3. මුළු Task එකම Touch කළ විට Detail පිටුවට යෑම
-        // මේ කොටස Delete listener එකෙන් පිටත තිබිය යුතුයි
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), TaskDetailActivity.class);
             intent.putExtra("taskId", currentTask.getTaskId());
             intent.putExtra("title", currentTask.getTitle());
-            intent.putExtra("desc", currentTask.getDescription());
+            intent.putExtra("desc", currentTask.getDescription()); // Detail page එකට යවන්න ඕන නිසා මේක තියෙනවා
             intent.putExtra("date", currentTask.getDateText());
             intent.putExtra("category", currentTask.getCategory());
             intent.putExtra("priority", currentTask.getPriority());
@@ -101,14 +97,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public int getItemCount() { return taskList.size(); }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTaskTitle, tvTaskDesc, tvPriorityBadge, tvCategoryBadge, tvDisplayDate, tvDisplayTime;
+        // tvTaskDesc මෙතනිනුත් අයින් කළා
+        TextView tvTaskTitle, tvPriorityBadge, tvCategoryBadge, tvDisplayDate, tvDisplayTime;
         CheckBox checkCompleted;
         ImageView imgDelete;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskTitle = itemView.findViewById(R.id.tvTaskTitle);
-            tvTaskDesc = itemView.findViewById(R.id.tvTaskDesc);
             tvPriorityBadge = itemView.findViewById(R.id.tvPriorityBadge);
             tvCategoryBadge = itemView.findViewById(R.id.tvCategoryBadge);
             tvDisplayDate = itemView.findViewById(R.id.tvDisplayDate);
