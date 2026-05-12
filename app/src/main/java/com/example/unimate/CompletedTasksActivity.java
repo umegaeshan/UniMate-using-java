@@ -37,7 +37,7 @@ public class CompletedTasksActivity extends AppCompatActivity {
         adapter = new TaskAdapter(completedTasks);
         recyclerView.setAdapter(adapter);
 
-        // 1. Settings Icon
+        // Handling the settings icon click to toggle light/dark theme
         ImageView btnSettings = findViewById(R.id.btnSettings);
         if (btnSettings != null) {
             btnSettings.setOnClickListener(v -> {
@@ -56,7 +56,7 @@ public class CompletedTasksActivity extends AppCompatActivity {
             });
         }
 
-        // 2. Notification Icon
+        // Handling the notification icon click
         ImageView btnNotification = findViewById(R.id.btnNotification);
         if (btnNotification != null) {
             btnNotification.setOnClickListener(v ->
@@ -64,12 +64,13 @@ public class CompletedTasksActivity extends AppCompatActivity {
             );
         }
 
-        // 3. Search Logic
+        // Implementing a dynamic search bar to filter completed tasks
         EditText etSearch = findViewById(R.id.etSearch);
         ImageView btnSearch = findViewById(R.id.btnSearch);
 
         if (btnSearch != null && etSearch != null) {
             btnSearch.setOnClickListener(v -> {
+                // Toggling search bar visibility when the search icon is clicked
                 if (isSearchVisible) {
                     etSearch.setVisibility(View.GONE);
                     etSearch.setText("");
@@ -80,6 +81,7 @@ public class CompletedTasksActivity extends AppCompatActivity {
                 isSearchVisible = !isSearchVisible;
             });
 
+            // Updating the task list in real-time as the user types
             etSearch.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -96,6 +98,7 @@ public class CompletedTasksActivity extends AppCompatActivity {
     private void filterTasks(String text) {
         List<TaskModel> filteredList = new ArrayList<>();
         for (TaskModel task : completedTasks) {
+            // Checking if the search keyword matches the task title or category
             if (task.getTitle().toLowerCase().contains(text.toLowerCase()) ||
                     (task.getCategory() != null && task.getCategory().toLowerCase().contains(text.toLowerCase()))) {
                 filteredList.add(task);
@@ -107,6 +110,8 @@ public class CompletedTasksActivity extends AppCompatActivity {
     private void fetchCompletedTasks() {
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId == null) return;
+
+        // Querying Firestore to get only tasks that are marked as completed
         FirebaseFirestore.getInstance().collection("users").document(userId).collection("tasks")
                 .whereEqualTo("isCompleted", true)
                 .addSnapshotListener((value, error) -> {

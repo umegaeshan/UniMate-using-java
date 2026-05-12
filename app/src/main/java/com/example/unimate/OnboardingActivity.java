@@ -13,22 +13,23 @@ public class OnboardingActivity extends AppCompatActivity {
     TextView tvSubtitle, tvDescription;
     Button btnContinue;
 
-    int currentPage = 0; // දැනට ඉන්න පිටුව (0, 1, හෝ 2)
+    int currentPage = 0; // Keeping track of the current slide index (0, 1, or 2)
 
-    // පිටු 3ට අදාළ විස්තර Arrays වලට දාලා තියෙනවා
+    // Storing the titles for the 3 different onboarding slides in an array
     String[] subtitles = {
             "Create Your Tasks",
             "Organize Your Lists",
             "Track Your Progress"
     };
 
+    // Storing the descriptions for the slides
     String[] descriptions = {
             "Add your daily tasks easily.\nWrite them down so you do not forget anything important.",
             "Group your tasks into folders.\nKeep your work and personal life separate and neat.",
             "See what you have finished.\nReach your goals and finish your day strong."
     };
 
-    // ඔයා drawable ෆෝල්ඩරයට දාපු පින්තූර 3 මේකට ඇතුළත් කරන්න
+    // Linking the illustration images from the drawable folder
     int[] images = {
             R.drawable.onboard_img_1,
             R.drawable.onboard_img_2,
@@ -46,27 +47,27 @@ public class OnboardingActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         btnContinue = findViewById(R.id.btnContinue);
 
-        updateUI(); // මුලින්ම ඇප් එක ඕපන් වෙද්දී පළමු පිටුව ලෝඩ් කිරීම
+        updateUI(); // Load the first slide immediately when the activity starts
 
-        // Continue බොත්තම එබූ විට
+        // Handling the logic to move to the next slide
         btnContinue.setOnClickListener(v -> {
             if (currentPage < 2) {
-                currentPage++; // ඊළඟ පිටුවට යනවා
+                currentPage++; // Move to the next page index
                 updateUI();
             } else {
-                // පිටු 3 ම ඉවර නම් Login එකට හෝ Main එකට යනවා
+                // If it's the last slide, finish onboarding and move to the Login screen
                 startActivity(new Intent(OnboardingActivity.this, LoginActivity.class));
                 finish();
             }
         });
 
-        // Back (<) බොත්තම එබූ විට
+        // Handling the logic to navigate back through the slides
         btnBack.setOnClickListener(v -> {
             if (currentPage > 0) {
-                currentPage--; // කලින් පිටුවට යනවා
+                currentPage--; // Move to the previous page
                 updateUI();
             } else {
-                finish(); // පළවෙනි පිටුවේ ඉඳන් back කළොත් Splash එකට යනවා
+                finish(); // If we are on the first slide, pressing back closes the onboarding flow
             }
         });
     }
@@ -78,10 +79,10 @@ public class OnboardingActivity extends AppCompatActivity {
         try {
             imgOnboarding.setImageResource(images[currentPage]);
         } catch (Exception e) {
-            imgOnboarding.setImageResource(R.mipmap.ic_launcher); // පින්තූරය නැත්නම් ලෝගෝ එක පෙන්වයි
+            imgOnboarding.setImageResource(R.mipmap.ic_launcher); // Fallback to app logo if image fails to load
         }
 
-        // අන්තිම පිටුවේදී බොත්තමේ නම වෙනස් කිරීම
+        // Change the button text to 'Get Started' on the final slide
         if (currentPage == 2) {
             btnContinue.setText("Get Started");
         } else {

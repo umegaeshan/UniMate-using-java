@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
+    <!-- Top bar for the completed tasks screen. I added a search icon here. -->
     <RelativeLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -54,6 +55,7 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <!-- Using RecyclerView because it recycles memory and is much smoother for long lists compared to ListView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCompleted"
         android:layout_width="match_parent"

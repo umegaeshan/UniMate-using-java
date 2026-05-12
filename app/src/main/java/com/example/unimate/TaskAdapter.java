@@ -35,7 +35,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TaskModel currentTask = taskList.get(position);
 
         holder.tvTaskTitle.setText(currentTask.getTitle());
-        // Description එක අයින් කළා!
+        // I removed the description text view from the card layout to keep the UI clean
         holder.tvDisplayDate.setText(currentTask.getDateText());
         holder.tvDisplayTime.setText(currentTask.getTimeText());
 
@@ -79,7 +79,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             Intent intent = new Intent(v.getContext(), TaskDetailActivity.class);
             intent.putExtra("taskId", currentTask.getTaskId());
             intent.putExtra("title", currentTask.getTitle());
-            intent.putExtra("desc", currentTask.getDescription()); // Detail page එකට යවන්න ඕන නිසා මේක තියෙනවා
+            intent.putExtra("desc", currentTask.getDescription()); // Passing description so it shows on the details page
             intent.putExtra("date", currentTask.getDateText());
             intent.putExtra("category", currentTask.getCategory());
             intent.putExtra("priority", currentTask.getPriority());
@@ -97,7 +97,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public int getItemCount() { return taskList.size(); }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        // tvTaskDesc මෙතනිනුත් අයින් කළා
+        // Description variable has also been removed here
         TextView tvTaskTitle, tvPriorityBadge, tvCategoryBadge, tvDisplayDate, tvDisplayTime;
         CheckBox checkCompleted;
         ImageView imgDelete;

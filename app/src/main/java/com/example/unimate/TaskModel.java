@@ -9,7 +9,7 @@ public class TaskModel {
     public boolean isCompleted;
     public int priorityLevel;
 
-    public TaskModel() {} // Firebase සඳහා
+    public TaskModel() {} // Required empty constructor for Firebase to map objects correctly
 
     public TaskModel(String title, String description, boolean isCompleted, String category, String priority, int priorityLevel, String dateText, String timeText) {
         this.title = title;
@@ -22,7 +22,7 @@ public class TaskModel {
         this.timeText = timeText;
     }
 
-    // Getters
+    // Standard Getters used to access object properties
     public String getTaskId() { return taskId; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }

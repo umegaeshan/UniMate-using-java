@@ -30,13 +30,13 @@ public class TaskListActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-    // Search සඳහා අවශ්‍ය Variables
+    // Required variables for the search functionality
     boolean isSearchVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list); // මුලින්ම UI එක Load කළ යුතුයි
+        setContentView(R.layout.activity_task_list); // Must load the UI first
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -47,7 +47,7 @@ public class TaskListActivity extends AppCompatActivity {
         taskAdapter = new TaskAdapter(myTasks);
         recyclerViewTasks.setAdapter(taskAdapter);
 
-        // 1. Settings (Dark Mode) අයිකන් එක
+        // 1. Settings icon to handle dark mode toggling
         ImageView btnSettings = findViewById(R.id.btnSettings);
         if (btnSettings != null) {
             btnSettings.setOnClickListener(v -> {
@@ -67,19 +67,19 @@ public class TaskListActivity extends AppCompatActivity {
             });
         }
 
-        // 2. Notification අයිකන් එක සහ Red Dot එක
+        // 2. Notification icon and red dot badge logic
         ImageView btnNotification = findViewById(R.id.btnNotification);
         View redDotBadge = findViewById(R.id.redDotBadge);
 
         if (btnNotification != null && redDotBadge != null) {
-            redDotBadge.setVisibility(View.VISIBLE); // අලුත් දැනුම්දීමක් පෙන්වීමට
+            redDotBadge.setVisibility(View.VISIBLE); // Simulating a new notification
             btnNotification.setOnClickListener(v -> {
-                redDotBadge.setVisibility(View.GONE); // එබූ විට රතු තිත්ත මැකී යයි
+                redDotBadge.setVisibility(View.GONE); // Hiding the badge on click
                 Toast.makeText(this, "No new notifications", Toast.LENGTH_SHORT).show();
             });
         }
 
-        // 3. Search අයිකන් එක සහ පෙට්ටිය
+        // 3. Search icon and input field logic
         EditText etSearch = findViewById(R.id.etSearch);
         ImageView btnSearch = findViewById(R.id.btnSearch);
 
@@ -109,7 +109,7 @@ public class TaskListActivity extends AppCompatActivity {
             startActivity(new Intent(TaskListActivity.this, AddTaskActivity.class));
         });
 
-        // Navigation
+        // Navigation setup
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -131,7 +131,7 @@ public class TaskListActivity extends AppCompatActivity {
         fetchTasksFromFirebase();
     }
 
-    // Search සඳහා අවශ්‍ය Method එක (onCreate එකෙන් පිටත)
+    // Method to handle real-time search filtering (placed outside onCreate)
     private void filterTasks(String text) {
         List<TaskModel> filteredList = new ArrayList<>();
         for (TaskModel task : myTasks) {

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <!-- A vertical linear layout holds all the input fields sequentially -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
             android:inputType="textPassword"
             android:padding="12dp" />
 
+        <!-- Input type textEmailAddress brings up the keyboard with the '@' symbol ready -->
         <EditText
             android:id="@+id/etSignUpEmail"
             android:layout_width="match_parent"
@@ -67,6 +69,7 @@
             android:inputType="textEmailAddress"
             android:padding="12dp" />
 
+        <!-- Input type phone brings up the numeric dialer keyboard directly -->
         <EditText
             android:id="@+id/etSignUpMobile"
             android:layout_width="match_parent"

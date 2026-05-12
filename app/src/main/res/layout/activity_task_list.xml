@@ -22,6 +22,7 @@
             android:layout_centerVertical="true"
             android:textColor="#000000"/>
 
+        <!-- This search box is hidden by default (visibility=gone). It shows up when the user clicks the search icon -->
         <EditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
@@ -64,6 +65,7 @@
                     android:src="@android:drawable/ic_popup_reminder"
                     app:tint="#000000"/>
 
+                <!-- A simple red dot view overlayed on the bell icon to act as a notification badge -->
                 <View
                     android:id="@+id/redDotBadge"
                     android:layout_width="10dp"
@@ -92,6 +94,7 @@
         android:layout_above="@+id/bottomNavigation"
         android:padding="10dp"/>
 
+    <!-- A Floating Action Button (FAB) placed at the bottom right corner for adding tasks quickly -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddTask"
         android:layout_width="wrap_content"

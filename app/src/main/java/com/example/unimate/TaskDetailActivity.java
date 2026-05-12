@@ -27,7 +27,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        // Intent එකෙන් එන දත්ත අල්ලගන්නවා
+        // Catching the data passed from the TaskAdapter via Intent
         taskId = getIntent().getStringExtra("taskId");
         title = getIntent().getStringExtra("title");
         desc = getIntent().getStringExtra("desc");
@@ -44,15 +44,15 @@ public class TaskDetailActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.detailTabLayout);
         btnComplete = findViewById(R.id.btnMarkComplete);
         btnDelete = findViewById(R.id.btnDelete);
-        btnEdit = findViewById(R.id.btnEdit); // Edit බොත්තම අල්ලගැනීම
+        btnEdit = findViewById(R.id.btnEdit); // Linking the edit button
 
-        // මුලින් දත්ත සෙට් කරනවා
+        // Setting up initial UI values
         tvTitle.setText(title);
         tvDetail.setText(desc);
         tvPriority.setText(priority);
         tvStatus.setText(isCompleted ? "Completed" : "Pending");
 
-        // Tabs මාරු වෙද්දී දත්ත මාරු කිරීම
+        // Logic to switch displayed content when different tabs are clicked
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -66,7 +66,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        // 1. Mark as Complete Logic
+        // 1. Logic to mark a task as completed and update the database
         btnComplete.setOnClickListener(v -> {
             FirebaseFirestore.getInstance().collection("users")
                     .document(FirebaseAuth.getInstance().getUid())
@@ -78,7 +78,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     });
         });
 
-        // 2. Delete Task Logic
+        // 2. Logic to delete a task directly from the details page
         btnDelete.setOnClickListener(v -> {
             FirebaseFirestore.getInstance().collection("users")
                     .document(FirebaseAuth.getInstance().getUid())
@@ -90,7 +90,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                     });
         });
 
-        // 3. Edit Task Logic (දත්ත ටික අරගෙන EditTaskActivity එකට යෑම)
+        // 3. Logic to pass current task data to the Edit screen
         btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditTaskActivity.class);
             intent.putExtra("taskId", taskId);
@@ -102,7 +102,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 4. Bottom Navigation Logic
+        // 4. Integrating bottom navigation on the detail page
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         if (bottomNavigationView != null) {
             bottomNavigationView.setOnItemSelectedListener(item -> {

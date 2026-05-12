@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
+    <!-- Top bar containing the page title and action icons -->
     <RelativeLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -46,6 +47,8 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <!-- I used a ScrollView here so that when the keyboard pops up,
+         the user can still scroll down to see the Add Task button -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,6 +71,7 @@
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
 
+            <!-- Setting gravity to top so the text starts from the top left corner in this big box -->
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
@@ -79,6 +83,7 @@
                 android:background="@android:drawable/editbox_background"
                 android:layout_marginBottom="15dp"/>
 
+            <!-- Putting Priority and Category buttons side by side using layout_weight -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,6 +121,9 @@
                 android:text="Select Deadline Date"
                 android:layout_marginBottom="5dp"
                 android:textColor="#424242"/>
+
+            <!-- Focusable is false because we don't want the user to type the date,
+                 they should click it to open the DatePicker dialog -->
             <EditText
                 android:id="@+id/etSelectedDate"
                 android:layout_width="match_parent"
@@ -161,6 +169,7 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- Appears at the very bottom for easy navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

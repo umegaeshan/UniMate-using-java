@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-// Firebase මුරකාරයා ගේන්න
+// Importing Firebase to check login states
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -18,27 +18,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 1. Firebase එක ඇහැරවලා වැඩට ගන්නවා
+        // Initializing Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // 2. මෙන්න මෙතැනදී තමයි අපි බලන්නේ කවුරුහරි කලින් ලොග් වෙලා ඉන්නවද කියලා
+        // Checking if a user is currently logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            // කෙනෙක් ලොග් වෙලා ඉන්නවා නම්, මේ පිටුව පෙන්වන්නේ නැතුව කෙලින්ම Task List එකට යන්න
+            // If the user is already authenticated, bypass this welcome screen and load the main app
             Intent intent = new Intent(MainActivity.this, TaskListActivity.class);
             startActivity(intent);
-            finish(); // මේ පිටුව වහලා දාන්න
-            return; // ඉතිරි කේත වැඩ කරන්න ඕනේ නැහැ
+            finish(); // Closing this activity so the user can't go back to it
+            return; // Exiting the method so the rest of the code doesn't execute
         }
 
-        // 3. කවුරුත් ලොග් වෙලා නැත්නම් විතරක් Start පිටුව පෙන්වන්න
+        // If no user is logged in, we show the welcome layout
         setContentView(R.layout.activity_main);
 
-        // XML එකේ තියෙන බොත්තම කේතයට සම්බන්ධ කිරීම
+        // Binding the start button from the XML
         Button btnLetsStart = findViewById(R.id.btnLetsStart);
 
-        // 4. Let's Start බොත්තම එබුවම Onboarding පිටුවට යාම පමණක් මෙහි තබා ඇත
+        // Directing new users to the onboarding screens to explain app features
         btnLetsStart.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, OnboardingActivity.class));
             finish();

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Used for the slider tutorial screens before login -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         android:src="@android:drawable/ic_media_previous"
         app:tint="#000000" />
 
+    <!-- Centered content block holding the changing images and text -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
             android:textSize="18sp"
             android:layout_marginBottom="25dp"/>
 
+        <!-- White card background to make the illustrations pop out nicely -->
         <androidx.cardview.widget.CardView
             android:layout_width="280dp"
             android:layout_height="280dp"

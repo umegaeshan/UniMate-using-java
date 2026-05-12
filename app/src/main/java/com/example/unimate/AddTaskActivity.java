@@ -35,7 +35,7 @@ public class AddTaskActivity extends AppCompatActivity {
         btnCategory = findViewById(R.id.btnCategory);
         btnAddTask = findViewById(R.id.btnAdd);
 
-        // 1. Date Picker (Native)
+        // Opening the default Android Date Picker so the user can easily select a deadline
         etSelectedDate.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             new DatePickerDialog(this, (view, year, month, day) -> {
@@ -44,7 +44,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        // 2. Time Picker (Native)
+        // Opening the Android Time Picker for the task deadline
         etSelectedTime.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             new TimePickerDialog(this, (view, hour, minute) -> {
@@ -55,7 +55,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false).show();
         });
 
-        // 3. Priority Menu
+        // Showing a popup menu to let the user select the priority level
         btnPriority.setOnClickListener(v -> {
             PopupMenu p = new PopupMenu(this, btnPriority);
             p.getMenu().add("High Priority"); p.getMenu().add("Medium Priority"); p.getMenu().add("Low Priority");
@@ -68,7 +68,7 @@ public class AddTaskActivity extends AppCompatActivity {
             p.show();
         });
 
-        // 4. Category Menu
+        // Showing a popup menu for task categories based on user subjects/modules
         btnCategory.setOnClickListener(v -> {
             PopupMenu p = new PopupMenu(this, btnCategory);
             String[] mods = {"Instrumentation", "Automation Systems", "PCB Design", "Programming", "Network Engineering"};
@@ -81,7 +81,7 @@ public class AddTaskActivity extends AppCompatActivity {
             p.show();
         });
 
-        // Bottom Navigation Bar එකට පණ දීම
+        // Setting up the bottom navigation bar to switch between main screens
         com.google.android.material.bottomnavigation.BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -102,7 +102,7 @@ public class AddTaskActivity extends AppCompatActivity {
             return false;
         });
 
-        // Top Bar Icons (Settings & Notification)
+        // Top Bar Icons handling (Settings for Dark Mode & Notifications)
         android.widget.ImageView btnSettings = findViewById(R.id.btnSettings);
         android.widget.ImageView btnNotification = findViewById(R.id.btnNotification);
 
@@ -129,7 +129,7 @@ public class AddTaskActivity extends AppCompatActivity {
             );
         }
 
-        // 5. Add Task to Firebase
+        // Saving the task to Firebase after validating the inputs
         btnAddTask.setOnClickListener(v -> {
             String name = etTaskName.getText().toString().trim();
             String date = etSelectedDate.getText().toString().trim();
@@ -145,6 +145,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private void saveTask() {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
 
+        // Creating a new task object using the model class to store in the database
         TaskModel task = new TaskModel(
                 etTaskName.getText().toString(),
                 etDescription.getText().toString(),

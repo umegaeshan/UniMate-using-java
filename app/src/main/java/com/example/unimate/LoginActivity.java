@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-// Firebase අදාළ දේවල් Import කිරීම
+// Importing necessary Firebase Authentication classes
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn;
     TextView tvRegister;
 
-    // Firebase මුරකාරයාව හඳුන්වා දීම
+    // Declaring the FirebaseAuth instance to handle user login
     FirebaseAuth mAuth;
 
     @Override
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Firebase එකට සම්බන්ධ වීම
+        // Initializing Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         etUsername = findViewById(R.id.etUsername);
@@ -38,37 +38,33 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         tvRegister = findViewById(R.id.tvRegister);
 
-        // Sign In බොත්තම එබුවම වෙන දේ
+        // Handling the login button click event
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // පෙට්ටි වලින් විස්තර ගන්නවා
-                // (පොඩි සටහනක්: Firebase ලොග් වෙන්න අහන්නේ Email එකක් නිසා,
-                // Username කියන පෙට්ටියෙත් අපි Email එක තමයි ටයිප් කරන්න ඕනේ)
+                // Fetching text from the input fields
+                // Note: The username field is essentially used for the email address
                 String email = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                // පෙට්ටි හිස්ව තියලා එබුවොත් බනින්න
+                // Basic validation to prevent empty submissions
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // ඔක්කොම හරි නම්, Firebase එකෙන් අහනවා මේක හරිද කියලා (signInWithEmailAndPassword)
+                // Authenticating the user with Firebase using their email and password
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                // Password එකයි Email එකයි හරි නම්
+                                // If the credentials are correct, navigate to the main Task List
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
                                     startActivity(intent);
                                     finish();
-
-                                    // ඊළඟට අපි ඇතුල් වෙන ප්‍රධාන පිටුව (Home Page) හැදුවාම,
-                                    // මෙතනින් ඒ පිටුවට යන්න කේතය ලියනවා. දැනට මැසේජ් එකක් විතරක් එයි.
                                 }
-                                // මොකක්හරි වැරදුණා නම් (උදා: Password එක වැරදියි නම්)
+                                // If authentication fails, display the error to the user
                                 else {
                                     Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
@@ -77,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Register ලින්ක් එක එබුවම Sign Up පිටුවට යන කේතය (මේක කලින් තිබ්බ එකමයි)
+        // Navigating to the registration screen if the user doesn't have an account
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

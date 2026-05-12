@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
+    <!-- I placed the delete button on the top right corner outside the scroll area for quick access -->
     <ImageView
         android:id="@+id/btnDelete"
         android:layout_width="30dp"
@@ -66,6 +67,7 @@
                     android:padding="2dp"/>
             </LinearLayout>
 
+            <!-- Small badges to show the priority and status of the task clearly -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,6 +96,7 @@
                     android:background="@drawable/badge_bg_green"/>
             </LinearLayout>
 
+            <!-- Using TabLayout to switch between Description, Due Date, and Category without taking up too much screen space -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/detailTabLayout"
                 android:layout_width="match_parent"

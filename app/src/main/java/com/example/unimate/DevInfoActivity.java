@@ -15,7 +15,7 @@ public class DevInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dev_info);
 
-        // Bottom Navigation Bar එකට පණ දීම
+        // Setting up the bottom navigation menu and highlighting the current tab
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_dev);
 
@@ -28,7 +28,7 @@ public class DevInfoActivity extends AppCompatActivity {
                 startActivity(new Intent(DevInfoActivity.this, CompletedTasksActivity.class));
                 overridePendingTransition(0, 0); finish(); return true;
             } else if (id == R.id.nav_dev) {
-                return true; // දැනට ඉන්නේ මේ පිටුවේ
+                return true; // We are already on this screen
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(DevInfoActivity.this, ProfileActivity.class));
                 overridePendingTransition(0, 0); finish(); return true;
@@ -36,7 +36,7 @@ public class DevInfoActivity extends AppCompatActivity {
             return false;
         });
 
-        // Top Bar Icons (Settings & Notification)
+        // Handling Top Bar Icons for settings and notifications
         ImageView btnSettings = findViewById(R.id.btnSettings);
         ImageView btnNotification = findViewById(R.id.btnNotification);
 
@@ -64,6 +64,6 @@ public class DevInfoActivity extends AppCompatActivity {
             );
         }
 
-        // btnExit එකට අදාළ කේතය සම්පූර්ණයෙන්ම ඉවත් කර ඇත
+        // I removed the standalone exit button code from here because we are using bottom navigation now
     }
 }

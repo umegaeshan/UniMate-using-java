@@ -96,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Navigation Bar Fix
+        // Integrating bottom navigation logic to ensure smooth transitions from the profile screen
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
         bottomNavigationView.setOnItemSelectedListener(item -> {

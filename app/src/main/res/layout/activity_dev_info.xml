@@ -59,6 +59,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
+            <!-- A neat trick to make the image circular: using a CardView and setting corner radius to half of the width/height -->
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -103,8 +104,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Student No : 2023t01865"
-
-
                 android:textSize="18sp"
                 android:textColor="#000000"
                 android:gravity="center"

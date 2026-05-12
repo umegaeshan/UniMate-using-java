@@ -19,21 +19,23 @@ public class EditTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task); // Add Task ඩිසයින් එකම ගන්නවා
 
-        // අදාළ පෙට්ටි සහ බොත්තම අල්ලගැනීම
+        // Reusing the Add Task layout here because the input form looks exactly the same
+        setContentView(R.layout.activity_add_task);
+
+        // Initializing UI components
         etTitle = findViewById(R.id.etTaskName);
         etDesc = findViewById(R.id.etDescription);
         btnUpdate = findViewById(R.id.btnAdd);
 
-        btnUpdate.setText("Update Task"); // බොත්තමේ නම Add වෙනුවට Update ලෙස වෙනස් කරනවා
+        btnUpdate.setText("Update Task"); // Changing button text since we are in edit mode
 
-        // TaskDetailActivity එකෙන් එන පරණ දත්ත පෙට්ටි වලට දානවා (Pre-fill)
+        // Fetching the passed intent data and pre-filling the fields for the user
         taskId = getIntent().getStringExtra("taskId");
         etTitle.setText(getIntent().getStringExtra("title"));
         etDesc.setText(getIntent().getStringExtra("desc"));
 
-        // Update බොත්තම එබූ විට අලුත් දත්ත Firebase එකට යැවීම
+        // Sending the updated data back to Firestore when the button is clicked
         btnUpdate.setOnClickListener(v -> {
             String newTitle = etTitle.getText().toString();
             String newDesc = etDesc.getText().toString();
@@ -53,7 +55,7 @@ public class EditTaskActivity extends AppCompatActivity {
                     .update(map)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "Task Updated Successfully!", Toast.LENGTH_SHORT).show();
-                        finish(); // සාර්ථකව Update වුණාම ආපහු පරණ පිටුවට යනවා
+                        finish(); // Closing the edit screen to go back
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Error updating task", Toast.LENGTH_SHORT).show();
